@@ -73,8 +73,7 @@ A **Revista Online** é uma aplicação web para publicação e leitura de artig
 ├── /public
 │   ├── /css
 │   │   └── styles.css
-│   ├── /imgs
-│   │   └── placeholder.jpg
+│   
 │   ├── /uploads
 │   ├── admin.html
 │   ├── artigo.html
@@ -103,11 +102,10 @@ Para hospedar no **Render**:
 3. Acesse a URL fornecida após o deploy.
 
 ## Contribuição
-1. Faça um fork do repositório.
-2. Crie uma branch: `git checkout -b minha-feature`.
-3. Commit suas mudanças: `git commit -m "Adiciona minha feature"`.
-4. Push: `git push origin minha-feature`.
-5. Abra um Pull Request.
+1. Crie uma branch: `git checkout -b minha-feature`.
+2. Commit suas mudanças: `git commit -m "Adiciona minha feature"`.
+3. Push: `git push origin minha-feature`.
+4. Abra um Pull Request.
 
 ## Problemas Comuns
 - **Upload de imagens falha**: Verifique permissões de escrita em `public/uploads/`.
@@ -120,8 +118,4 @@ Para hospedar no **Render**:
 - Usar `bcrypt` para senhas no `data.json`.
 - Adicionar testes automatizados (Jest, Cypress).
 
-## Licença
-MIT License
-
-## Contato
-Para dúvidas, abra uma issue no repositório ou contate <seu-email>.
+.
