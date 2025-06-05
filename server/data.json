@@ -31,7 +31,22 @@
       "email": "user2@revista.com",
       "password": "user123",
       "role": "user"
+    },
+    {
+      "id": 4,
+      "username": "Dercio",
+      "email": "dercio@revista.com",
+      "password": "1234",
+      "role": "user"
     }
   ],
-  "messages": []
+  "messages": [
+    {
+      "id": 1,
+      "sender": "admin",
+      "content": "oi",
+      "timestamp": "2025-06-05T09:09:17.130Z",
+      "recipient": null
+    }
+  ]
 }
