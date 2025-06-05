@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Administração - Revista Online</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Revista Online</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="categorias.html">Categorias</a></li>
+          <li class="nav-item"><a class="nav-link" href="chat.html">Chat</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="register.html">Cadastro</a></li>
+          <li class="nav-item"><a class="nav-link active" href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Painel de Administração</h2>
+    <div id="admin-content">
+      <!-- Monitoramento de Usuários -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Monitoramento de Usuários</h5>
+          <p><strong>Usuários Online:</strong> <span id="online-count">0</span></p>
+          <ul id="online-users" class="list-group"></ul>
+        </div>
+      </div>
+      <!-- Chat Privado -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Chat Privado</h5>
+          <div class="mb-3">
+            <label for="chat-user-select" class="form-label">Selecionar Usuário Online:</label>
+            <select id="chat-user-select" class="form-select">
+              <option value="">Nenhum (Mensagem Pública)</option>
+            </select>
+          </div>
+          <div id="admin-chat-messages" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;"></div>
+          <form id="admin-chat-form" class="mt-3">
+            <div class="input-group">
+              <input type="text" id="admin-chat-input" class="form-control" placeholder="Digite sua mensagem..." required>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Gerenciamento de Artigos -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Gerenciar Artigos</h5>
+          <form id="article-form" class="mb-4">
+            <input type="hidden" id="article-id">
+            <div class="mb-3">
+              <label for="article-title" class="form-label">Título</label>
+              <input type="text" class="form-control" id="article-title" required>
+            </div>
+            <div class="mb-3">
+              <label for="article-summary" class="form-label">Resumo</label>
+              <textarea class="form-control" id="article-summary" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="article-content" class="form-label">Conteúdo (HTML)</label>
+              <textarea class="form-control" id="article-content" rows="5" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="article-category" class="form-label">Categoria</label>
+              <input type="text" class="form-control" id="article-category" required>
+            </div>
+            <div class="mb-3">
+              <label for="article-image" class="form-label">Imagem do Artigo</label>
+              <input type="file" class="form-control" id="article-image" accept="image/jpeg,image/png,image/gif">
+              <img id="image-preview" src="" class="mt-2" style="max-width: 200px; display: none;">
+            </div>
+            <button type="submit" class="btn btn-success">Salvar Artigo</button>
+            <button type="button" id="clear-form" class="btn btn-secondary">Limpar</button>
+          </form>
+          <h6>Artigos Existentes</h6>
+          <div id="articles-list" class="list-group"></div>
+        </div>
+      </div>
+      <!-- Gerenciamento de Mensagens do Chat -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Moderar Chat</h5>
+          <div id="messages-list" class="list-group"></div>
+        </div>
+      </div>
+    </div>
+    <p id="admin-error" class="text-danger mt-3"></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const adminContent = document.getElementById('admin-content');
+      const adminError = document.getElementById('admin-error');
+
+      if (!user || user.role !== 'admin') {
+        adminError.textContent = 'Acesso restrito a administradores. Faça login como admin.';
+        adminContent.style.display = 'none';
+        return;
+      }
+
+      const ws = new WebSocket(`ws://${window.location.host}`);
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: 'auth', username: user.username }));
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'history') {
+          data.messages.forEach(msg => displayMessage(msg));
+        } else if (data.type === 'message') {
+          displayMessage(data);
+        } else if (data.type === 'onlineUsers') {
+          updateOnlineUsers(data.users);
+          updateChatUserSelect(data.users);
+        }
+      };
+
+      ws.onerror = (error) => {
+        adminError.textContent = 'Erro na conexão com o chat';
+        console.error('WebSocket error:', error);
+      };
+
+      ws.onclose = () => {
+        adminError.textContent = 'Conexão com o chat fechada';
+      };
+
+      function updateChatUserSelect(onlineUsers) {
+        const select = document.getElementById('chat-user-select');
+        select.innerHTML = '<option value="">Nenhum (Mensagem Pública)</option>';
+        onlineUsers.forEach(username => {
+          if (username !== user.username) {
+            const option = document.createElement('option');
+            option.value = username;
+            option.textContent = username;
+            select.appendChild(option);
+          }
+        });
+      }
+
+      function displayMessage(msg) {
+        const chatMessages = document.getElementById('admin-chat-messages');
+        const div = document.createElement('div');
+        div.classList.add('mb-2');
+        const isOwnMessage = msg.sender === user.username;
+        const recipient = msg.recipient ? `(para ${msg.recipient})` : '(pública)';
+        div.innerHTML = `
+          <strong>${msg.sender}${isOwnMessage ? ' (Você)' : ''}:</strong> ${msg.content} ${recipient}
+          <small class="text-muted">(${new Date(msg.timestamp).toLocaleTimeString()})</small>
+        `;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function updateOnlineUsers(users) {
+        const onlineCount = document.getElementById('online-count');
+        const onlineUsersList = document.getElementById('online-users');
+        onlineCount.textContent = users.length;
+        onlineUsersList.innerHTML = '';
+        users.forEach(username => {
+          const li = document.createElement('li');
+          li.classList.add('list-group-item');
+          li.textContent = username;
+          onlineUsersList.appendChild(li);
+        });
+      }
+
+      document.getElementById('admin-chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const content = document.getElementById('admin-chat-input').value.trim();
+        const recipient = document.getElementById('chat-user-select').value;
+        if (!content) return;
+        ws.send(JSON.stringify({ type: 'message', content, recipient: recipient || null }));
+        document.getElementById('admin-chat-input').value = '';
+      });
+
+      // Pré-visualizar imagem selecionada
+      document.getElementById('article-image').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const preview = document.getElementById('image-preview');
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            preview.src = event.target.result;
+            preview.style.display = 'block';
+          };
+          reader.readAsDataURL(file);
+        } else {
+          preview.style.display = 'none';
+        }
+      });
+
+      async function loadArticles() {
+        try {
+          const response = await fetch('/api/articles');
+          const articles = await response.json();
+          const articlesList = document.getElementById('articles-list');
+          articlesList.innerHTML = '';
+          articles.forEach(article => {
+            const div = document.createElement('div');
+            div.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+            div.innerHTML = `
+              <span>${article.title} (${article.category})</span>
+              <div>
+                <button class="btn btn-sm btn-primary me-2" onclick="editArticle(${article.id})">Editar</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteArticle(${article.id})">Excluir</button>
+              </div>
+            `;
+            articlesList.appendChild(div);
+          });
+        } catch (error) {
+          adminError.textContent = 'Erro ao carregar artigos';
+        }
+      }
+
+      async function loadMessages() {
+        try {
+          const response = await fetch('/api/messages');
+          const messages = await response.json();
+          const messagesList = document.getElementById('messages-list');
+          messagesList.innerHTML = '';
+          messages.forEach(msg => {
+            const div = document.createElement('div');
+            div.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+            div.innerHTML = `
+              <span><strong>${msg.sender}:</strong> ${msg.content} <small>(${new Date(msg.timestamp).toLocaleTimeString()})</small></span>
+              <button class="btn btn-sm btn-danger" onclick="deleteMessage(${msg.id})">Excluir</button>
+            `;
+            div.appendChild(div);
+          });
+        } catch (error) {
+          adminError.textContent = 'Erro ao carregar mensagens';
+        }
+      }
+
+      document.getElementById('article-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('article-id').value;
+        const title = document.getElementById('article-title').value;
+        const summary = document.getElementById('article-summary').value;
+        const content = document.getElementById('article-content').value;
+        const category = document.getElementById('article-category').value;
+        const imageFile = document.getElementById('article-image').files[0];
+
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('summary', summary);
+        formData.append('content', content);
+        formData.append('category', category);
+        if (imageFile) {
+          formData.append('image', imageFile);
+        }
+
+        try {
+          const method = id ? 'PUT' : 'POST';
+          const url = id ? `/api/articles/${id}` : '/api/articles';
+          const response = await fetch(url, {
+            method,
+            body: formData
+          });
+          if (response.ok) {
+            document.getElementById('article-form').reset();
+            document.getElementById('article-id').value = '';
+            document.getElementById('image-preview').style.display = 'none';
+            loadArticles();
+          } else {
+            const result = await response.json();
+            adminError.textContent = result.message || 'Erro ao salvar artigo';
+          }
+        } catch (error) {
+          adminError.textContent = 'Erro de conexão';
+        }
+      });
+
+      document.getElementById('clear-form').addEventListener('click', () => {
+        document.getElementById('article-form').reset();
+        document.getElementById('article-id').value = '';
+        document.getElementById('image-preview').style.display = 'none';
+      });
+
+      window.editArticle = async (id) => {
+        try {
+          const response = await fetch(`/api/articles/${id}`);
+          const article = await response.json();
+          document.getElementById('article-id').value = article.id;
+          document.getElementById('article-title').value = article.title;
+          document.getElementById('article-summary').value = article.summary;
+          document.getElementById('article-content').value = article.content;
+          document.getElementById('article-category').value = article.category;
+          const preview = document.getElementById('image-preview');
+          if (article.image) {
+            preview.src = article.image;
+            preview.style.display = 'block';
+          } else {
+            preview.style.display = 'none';
+          }
+        } catch (error) {
+          adminError.textContent = 'Erro ao carregar artigo';
+        }
+      };
+
+      window.deleteArticle = async (id) => {
+        if (!confirm('Tem certeza que deseja excluir este artigo?')) return;
+        try {
+          const response = await fetch(`/api/articles/${id}`, { method: 'DELETE' });
+          if (response.ok) {
+            loadArticles();
+          } else {
+            adminError.textContent = 'Erro ao excluir artigo';
+          }
+        } catch (error) {
+          adminError.textContent = 'Erro de conexão';
+        }
+      };
+
+      window.deleteMessage = async (id) => {
+        if (!confirm('Tem certeza que deseja excluir esta mensagem?')) return;
+        try {
+          const response = await fetch(`/api/messages/${id}`, { method: 'DELETE' });
+          if (response.ok) {
+            loadMessages();
+          } else {
+            adminError.textContent = 'Erro ao excluir mensagem';
+          }
+        } catch (error) {
+          adminError.textContent = 'Erro de conexão';
+        }
+      };
+
+      loadArticles();
+      loadMessages();
+    });
+  </script>
+</body>
+</html>

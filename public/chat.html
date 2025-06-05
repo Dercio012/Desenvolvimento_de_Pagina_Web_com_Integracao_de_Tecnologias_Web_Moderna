@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat - Revista Online</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Revista Online</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="categorias.html">Categorias</a></li>
+          <li class="nav-item"><a class="nav-link active" href="chat.html">Chat</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html">Admin</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Chat da Revista</h2>
+    <div class="card">
+      <div class="card-body">
+        <div id="chat-messages" style="height: 400px; overflow-y: auto; border: 1px solid #ddd; padding: 10px;"></div>
+        <form id="chat-form" class="mt-3">
+          <div class="input-group">
+            <input type="text" id="chat-input" class="form-control" placeholder="Digite sua mensagem..." required>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+        <p id="chat-error" class="text-danger mt-2"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const chatMessages = document.getElementById('chat-messages');
+      const chatForm = document.getElementById('chat-form');
+      const chatInput = document.getElementById('chat-input');
+      const chatError = document.getElementById('chat-error');
+
+      if (!user) {
+        chatError.textContent = 'Você precisa estar logado para usar o chat.';
+        chatForm.style.display = 'none';
+        chatMessages.innerHTML = '<p class="text-center">Faça <a href="login.html">login</a> para participar do chat.</p>';
+        return;
+      }
+
+      const ws = new WebSocket(`ws://${window.location.host}`);
+
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: 'auth', username: user.username }));
+      };
+
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'history') {
+          data.messages.forEach(msg => displayMessage(msg));
+        } else if (data.type === 'message') {
+          displayMessage(data);
+        } else if (data.type === 'error') {
+          chatError.textContent = data.message;
+        }
+      };
+
+      ws.onerror = (error) => {
+        chatError.textContent = 'Erro na conexão com o chat';
+        console.error('WebSocket error:', error);
+      };
+
+      ws.onclose = () => {
+        chatError.textContent = 'Conexão com o chat fechada';
+      };
+
+      function displayMessage(msg) {
+        const div = document.createElement('div');
+        div.classList.add('mb-2');
+        const isOwnMessage = msg.sender === user.username;
+        const recipient = msg.recipient ? `(privada para ${msg.recipient})` : '';
+        div.innerHTML = `
+          <strong>${msg.sender}${isOwnMessage ? ' (Você)' : ''}:</strong> ${msg.content} ${recipient}
+          <small class="text-muted">(${new Date(msg.timestamp).toLocaleTimeString()})</small>
+        `;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const content = chatInput.value.trim();
+        if (!content) return;
+        ws.send(JSON.stringify({ type: 'message', content, recipient: null }));
+        chatInput.value = '';
+      });
+    });
+  </script>
+</body>
+</html>

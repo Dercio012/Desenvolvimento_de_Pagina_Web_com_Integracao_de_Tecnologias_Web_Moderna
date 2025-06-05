@@ -1,0 +1,16 @@
+body {
+  background-color: #f8f9fa;
+}
+.card {
+  border-radius: 10px;
+}
+#chat-messages {
+  background-color: #fff;
+  border-radius: 5px;
+}
+#chat-messages div {
+  padding: 5px;
+}
+#chat-messages div:nth-child(odd) {
+  background-color: #f1f1f1;
+}

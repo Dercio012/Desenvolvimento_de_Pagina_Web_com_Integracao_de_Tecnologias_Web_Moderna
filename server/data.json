@@ -1,0 +1,37 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "title": "Tendencias de Tecnologias em 2025",
+      "summary": " tecnologia está avançando rápido e trazendo soluções cada vez mais inteligentes.",
+      "content": " \r\nInteligência Artificial (IA)\r\nA IA está sendo usada em tudo: atendimento ao cliente, saúde, educação e até arte. Ferramentas como o ChatGPT estão revolucionando a forma como interagimos com máquinas.\r\nComputação em Nuvem e Edge Computing\r\nArmazenar dados na nuvem continua crescendo. Já o edge computing traz os dados mais perto dos usuários, tornando tudo mais rápido.\r\n\r\nInternet das Coisas (IoT)\r\nDispositivos inteligentes conectados, como geladeiras, lâmpadas e relógios, estão cada vez mais presentes no dia a dia.",
+      "category": "Tendencias tecnologicas",
+      "image": "/uploads/1749022140415-781927166.jpg",
+      "createdAt": "2025-06-04T07:29:00.476Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@revista.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "username": "user1",
+      "email": "user1@revista.com",
+      "password": "user123",
+      "role": "user"
+    },
+    {
+      "id": 3,
+      "username": "user2",
+      "email": "user2@revista.com",
+      "password": "user123",
+      "role": "user"
+    }
+  ],
+  "messages": []
+}
