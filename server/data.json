@@ -8,6 +8,15 @@
       "category": "Tendencias tecnologicas",
       "image": "/uploads/1749022140415-781927166.jpg",
       "createdAt": "2025-06-04T07:29:00.476Z"
+    },
+    {
+      "id": 2,
+      "title": "TENDENCIAS DA MODA 2025",
+      "summary": "teste",
+      "content": "testando",
+      "category": "MODA",
+      "image": "/uploads/1749123298985-441651774.jpg",
+      "createdAt": "2025-06-05T11:34:59.117Z"
     }
   ],
   "users": [
