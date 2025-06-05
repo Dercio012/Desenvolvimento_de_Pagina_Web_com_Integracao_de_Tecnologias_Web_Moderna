@@ -17,6 +17,15 @@
       "category": "MODA",
       "image": "/uploads/1749123298985-441651774.jpg",
       "createdAt": "2025-06-05T11:34:59.117Z"
+    },
+    {
+      "id": 3,
+      "title": "Tendencias culturais ",
+      "summary": "testando as tendencias ",
+      "content": "lorepsum ......",
+      "category": "cultura",
+      "image": "/uploads/1749123626512-620213780.jpg",
+      "createdAt": "2025-06-05T11:40:26.543Z"
     }
   ],
   "users": [
