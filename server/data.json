@@ -4,7 +4,7 @@
       "id": 1,
       "title": "Tendencias de Tecnologias em 2025",
       "summary": " tecnologia está avançando rápido e trazendo soluções cada vez mais inteligentes.",
-      "content": " \r\nInteligência Artificial (IA)\r\nA IA está sendo usada em tudo: atendimento ao cliente, saúde, educação e até arte. Ferramentas como o ChatGPT estão revolucionando a forma como interagimos com máquinas.\r\nComputação em Nuvem e Edge Computing\r\nArmazenar dados na nuvem continua crescendo. Já o edge computing traz os dados mais perto dos usuários, tornando tudo mais rápido.\r\n\r\nInternet das Coisas (IoT)\r\nDispositivos inteligentes conectados, como geladeiras, lâmpadas e relógios, estão cada vez mais presentes no dia a dia.",
+      "content": " \r\nInteligência Artificial (IA)\r\nA IA está sendo usada em tudo: atendimento ao cliente, saúde, educação e até arte. Ferramentas como o ChatGPT estão revolucionando a forma como interagimos com máquinas.\r\nComputação em Nuvem e Edge Computing\r\nArmazenar dados na nuvem continua crescendo. Já o edge computing traz os dados mais perto dos usuários, tornando tudo mais rápido.\r\n\r\nInternet das Coisas (IoT)\r\nDispositivos inteligentes conectados, como geladeiras, lâmpadas e relógios, estão cada vez mais presentes no dia a dia.\r\n\r\n\r\nA Era dos Wearables Inteligentes\r\n\r\nOs gadgets vestíveis estão redefinindo a tecnologia em 2025. Relógios que monitoram stress em tempo real, óculos AR que projetam notificações, e até roupas com sensores térmicos são realidade. A Apple e a Samsung competem com dispositivos que unem funcionalidade e design, enquanto startups no X mostram protótipos de tênis que ajustam o amortecimento automaticamente. Prepare-se: seu guarda-roupa está prestes a ficar mais esperto que seu smartphone!",
       "category": "Tendencias tecnologicas",
       "image": "/uploads/1749022140415-781927166.jpg",
       "createdAt": "2025-06-04T07:29:00.476Z"
@@ -12,8 +12,8 @@
     {
       "id": 2,
       "title": "TENDENCIAS DA MODA 2025",
-      "summary": "teste",
-      "content": "testando",
+      "summary": "O Retorno Glorioso do Maximalismo",
+      "content": "\r\n\r\nEm 2025, a moda grita \"mais é mais\"! O maximalismo está dominando as passarelas, com estampas vibrantes, camadas ousadas e acessórios exagerados. Pense em vestidos florais combinados com jaquetas de couro neon e brincos esculturais. Marcas como Gucci e Balenciaga lideram essa revolução, enquanto influenciadores no X mostram como misturar texturas sem medo. É a hora de abandonar o minimalismo e abraçar a extravagância – sua personalidade é o melhor acessório!\r\n\r\nSustentabilidade com Estilo\r\n\r\nA moda consciente nunca esteve tão chique. Peças feitas de tecidos reciclados, como garrafas PET transformadas em malhas luxuosas, são tendência absoluta. Brechós digitais explodem no X, com jovens garimpando vintage dos anos 90. Marcas independentes, como a brasileira Osklen, investem em tingimentos naturais e upcycling. Quer estar na moda? Aposte em uma peça de segunda mão e conte sua história – o planeta agradece, e seu look também.",
       "category": "MODA",
       "image": "/uploads/1749123298985-441651774.jpg",
       "createdAt": "2025-06-05T11:34:59.117Z"
@@ -21,11 +21,38 @@
     {
       "id": 3,
       "title": "Tendencias culturais ",
-      "summary": "testando as tendencias ",
-      "content": "lorepsum ......",
+      "summary": "Diversidade em Foco",
+      "content": "Cultura\r\nO Renascimento dos Microeventos\r\n\r\nEsqueça os festivais lotados: em 2025, a cultura abraça os microeventos. Feiras de arte locais, clubes de leitura em cafés, e sessões de cinema ao ar livre estão bombando. No X, hashtags como #CulturaLocal destacam encontros intimistas que celebram diversidade. Cidades como São Paulo e Lisboa lideram com pop-ups culturais que misturam gastronomia, música e debates. A dica? Descubra um evento na sua vizinhança – conexões reais estão na moda.\r\n\r\n\r\n\r\nA cultura pop nunca foi tão inclusiva. Séries como Heartstopper e filmes como Tudo em Todo o Lugar ao Mesmo Tempo colocam narrativas diversas no centro.\r\ncriadores de conteúdo de comunidades marginalizadas ganham voz, compartilhando histórias autênticas. Marcas que ignoram a diversidade estão ficando para trás – em 2025, autenticidade é a moeda cultural mais valiosa. \r\nJunte-se à conversa e celebre todas as vozes!",
       "category": "cultura",
-      "image": "/uploads/1749123626512-620213780.jpg",
+      "image": "/uploads/1749141973089-326852527.jpg",
       "createdAt": "2025-06-05T11:40:26.543Z"
+    },
+    {
+      "id": 4,
+      "title": "Tendencias da Arte ",
+      "summary": "A arte digital está explodindo em 2025",
+      "content": "\r\n\r\nArtistas  vendem obras interativas que mudam com o tempo, usando blockchain para autenticidade. Plataformas como Foundation e OpenSea democratizam o acesso, permitindo que colecionadores comprem peças únicas por preços acessíveis. \r\nMuseus e espaços públicos apostam em instalações que misturam luz, som e tecnologia. Em 2025, exposições como as do TeamLab em Tóquio ou do Atelier des Lumières em Paris transformam visitantes em parte da obra, vídeos de instalações interativas viralizam, inspirando artistas locais.  é uma experiência que transcende a tela do celular.",
+      "category": "Arte",
+      "image": "/uploads/1749142191755-585103250.jpg",
+      "createdAt": "2025-06-05T16:49:51.762Z"
+    },
+    {
+      "id": 5,
+      "title": "Musica",
+      "summary": "O Revival do Pop Punk",
+      "content": "\r\n\r\n\r\nO pop punk está de volta com força total! Bandas como Olivia Rodrigo e Machine Gun Kelly misturam nostalgia dos anos 2000 com letras modernas, conquistando Gen Z e Millennials  Festivais como o When We Were Young esgotam em minutos. Quer sentir a vibe? Monte uma playlist com Paramore, Blink-182 e novos talentos – e prepare-se para cantar alto no próximo show!\r\n\r\nMúsica Hiperlocal e Fusões Inusitadas\r\n\r\nEm 2025, artistas independentes brilham com sons que celebram suas raízes. No Brasil, o forró se mistura com trap, enquanto na África do Sul, o amapiano ganha toques eletrônicos. Plataformas como SoundCloud e posts  destacam esses talentos. A dica? Siga hashtags como #MúsicaLocal para descobrir sons únicos – sua próxima banda favorita pode estar na sua cidade.",
+      "category": "Musica",
+      "image": "/uploads/1749142876154-990580264.JPG",
+      "createdAt": "2025-06-05T16:55:58.805Z"
+    },
+    {
+      "id": 6,
+      "title": "Musica",
+      "summary": "\r\nO Revival do Pop Punk\r\n",
+      "content": "Música Hiperlocal e Fusões Inusitadas\r\n\r\nO pop punk está de volta com força total! Bandas como Olivia Rodrigo e Machine Gun Kelly misturam nostalgia dos anos 2000 com letras modernas, conquistando Gen Z e Millennials no X. Festivais como o When We Were Young esgotam em minutos. Quer sentir a vibe? Monte uma playlist com Paramore, Blink-182 e novos talentos – e prepare-se para cantar alto no próximo show!\r\n\r\n\r\n\r\nEm 2025, artistas independentes brilham com sons que celebram suas raízes. No Brasil, o forró se mistura com trap, enquanto na África do Sul, o amapiano ganha toques eletrônicos. Plataformas como SoundCloud e posts destacam esses talentos. A dica? Siga hashtags como #MúsicaLocal para descobrir sons únicos – sua próxima banda favorita pode estar na sua cidade.",
+      "category": "musica",
+      "image": "/uploads/1749142773925-933253546.JPG",
+      "createdAt": "2025-06-05T16:59:33.928Z"
     }
   ],
   "users": [
