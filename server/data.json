@@ -40,13 +40,5 @@
       "role": "user"
     }
   ],
-  "messages": [
-    {
-      "id": 1,
-      "sender": "admin",
-      "content": "oi",
-      "timestamp": "2025-06-05T09:09:17.130Z",
-      "recipient": null
-    }
-  ]
+  "messages": []
 }
